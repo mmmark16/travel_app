@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app/page/finish_page.dart';
 
 class SelectRoomPage extends StatefulWidget {
   const SelectRoomPage({super.key});
@@ -35,7 +36,29 @@ class _SelectRoomPagePageState extends State<SelectRoomPage> {
               ),
             ),
           ),
-          Container()
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FinishPage(answer: [true, false, true], titles: ['','',''], code: '263485')),
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple.shade200,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  "Войти в комнату",
+                  style: TextStyle(fontSize: 24),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

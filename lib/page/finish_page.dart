@@ -17,18 +17,19 @@ class FinishPage extends StatefulWidget {
   State<FinishPage> createState() => _FinishPageState();
 }
 
-
 class _FinishPageState extends State<FinishPage> {
-
   RoomModel setRoom = new RoomModel(id: '', id_country: '', answers: []);
   List<String> allAnswers = [];
+  List<dynamic> splitArray = [];
+  List<String> resultAnswer = [];
+
   void returnAllAnswers() async {
     QuerySnapshot qSnap =
         await FirebaseFirestore.instance.collection('room').get();
     int roomLength = qSnap.docs.length;
     await FirebaseFirestore.instance.collection("room").get().then((snapshot) {
       for (int i = 0; i < roomLength; i++) {
-        if(snapshot.docs[i].id == widget.code){
+        if (snapshot.docs[i].id == widget.code) {
           setRoom = RoomModel(
             id: snapshot.docs[i].id,
             id_country: snapshot.docs[i].get('id_country'),
@@ -37,15 +38,39 @@ class _FinishPageState extends State<FinishPage> {
         }
       }
     });
-    for(int i = 0; i < setRoom.answers.length; i++){
+    for (int i = 0; i < setRoom.answers.length; i++) {
       allAnswers.add(setRoom.answers[i]);
     }
     print(allAnswers);
+    for (int i = 0; i < allAnswers.length; i++) {
+      splitArray.add(allAnswers[i].split(''));
+    }
+    print(splitArray);
+    for(int i = 0; i < splitArray.length; i++){
+      if(i == 0){
+        resultAnswer = splitArray[i];
+      } else {
+        for(int j = 0; j < resultAnswer.length; j++){
+          if(resultAnswer[j] == splitArray[i][j] && splitArray[i][j] == '1'){
+            resultAnswer[j] = '1';
+          } else {
+            resultAnswer[j] = '0';
+          }
+        }
+      }
+    }
+    print('ИТОГ');
+    print(resultAnswer);
+  }
+
+  @override
+  void initState() {
+    returnAllAnswers();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    returnAllAnswers();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -61,55 +86,40 @@ class _FinishPageState extends State<FinishPage> {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      child: StreamBuilder(
-                          stream: FirebaseFirestore.instance
-                              .collection('room')
-                              .snapshots(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (!snapshot.hasData)
-                              return Text(
-                                  "НЕТ ОТВЕТОВ ИЛИ ОШИБКА ПОЛУЧЕНИЯ ДАННЫХ(НЕВЕРНЫЙ КОД КОМНАТЫ)");
-                            return Column(
-                              children: [
-                                Text("НАЗВАНИЕ ТУРА"),
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: widget.titles.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.all(8),
-                                          child: Text(widget.titles[index]),
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              2,
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.all(8),
-                                          child: Center(
-                                            child: Text(
-                                                widget.answer[index] == true
-                                                    ? "Понравилось"
-                                                    : "Не понравилось"),
-                                          ),
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              2,
-                                        )
-                                      ],
-                                    );
-                                  },
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: widget.titles.length,
+                        itemBuilder:
+                            (BuildContext context, int index) {
+                          return Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                child: Text(widget.titles[index]),
+                                width: MediaQuery.of(context)
+                                    .size
+                                    .width /
+                                    2,
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                child: Center(
+                                  child: Text(
+                                      resultAnswer[index] == '1'
+                                          ? "Понравилось"
+                                          : "Не понравилось"),
                                 ),
-                              ],
-                            );
-                          }),
+                                width: MediaQuery.of(context)
+                                    .size
+                                    .width /
+                                    2,
+                              )
+                            ],
+                          );
+                        },
+                      ),
 /*                      child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: widget.titles.length,
@@ -146,3 +156,6 @@ class _FinishPageState extends State<FinishPage> {
     );
   }
 }
+
+
+
