@@ -1,19 +1,40 @@
 import 'package:flutter/material.dart';
-
+import '../global.dart';
+import '../model/country_model.dart';
 import '../page/create_room_page.dart';
 
 class TravelCard extends StatelessWidget {
-  const TravelCard({super.key});
+  final String id;
+  final String title;
+  final String photo;
+  final List<dynamic> tours;
+
+  const TravelCard({
+    super.key,
+    required this.id,
+    required this.title,
+    required this.photo,
+    required this.tours,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 24.0),
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
+          setCountry = CountryModel(
+            id: id,
+            name: title,
+            photo: photo,
+            tours: tours,
+          );
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CreatePageRoom()),
+            MaterialPageRoute(
+                builder: (context) => CreatePageRoom(
+                      title: title,
+                    )),
           );
         },
         child: Container(
@@ -28,22 +49,14 @@ class TravelCard extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Container(
                   height: 160,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/japan.jpg"),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                  child: Image.network(photo),
                 ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Тур по Японии",
-                  style: TextStyle(
-                    fontSize: 24
-                  ),
+                  title,
+                  style: TextStyle(fontSize: 24),
                 ),
               )
             ],

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:travel_app/page/select_rooms_page.dart';
 import 'package:travel_app/page/travel_cards_page.dart';
 
-import '../widget/travel_card.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key,});

@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:travel_app/page/finish_page.dart';
-import '../model/card_model.dart';
+import '../global.dart';
 import '../widget/tour_card.dart';
 
-class RoomPage extends StatefulWidget {
-  const RoomPage({
+class SwipeRoomPage extends StatefulWidget {
+  const SwipeRoomPage({
     super.key,
   });
 
   @override
-  State<RoomPage> createState() => _RoomPageState();
+  State<SwipeRoomPage> createState() => _SwipeRoomPageState();
 }
 
-class _RoomPageState extends State<RoomPage> {
-
+class _SwipeRoomPageState extends State<SwipeRoomPage> {
   final CardSwiperController controller = CardSwiperController();
-  final cards = candidates.map(TourCard.new).toList();
+  final cards = setTourList.map(TourCard.new).toList();
 
   List<bool> answer = [];
   List<String> titles = [];
@@ -25,6 +24,7 @@ class _RoomPageState extends State<RoomPage> {
   void dispose() {
     controller.dispose();
     super.dispose();
+    clearSetTourList();
   }
 
   @override
@@ -40,7 +40,7 @@ class _RoomPageState extends State<RoomPage> {
             Flexible(
               child: CardSwiper(
                 controller: controller,
-                cardsCount: cards.length,
+                cardsCount: setTourList.length,
                 isLoop: false,
                 onSwipe: _onSwipe,
                 onUndo: _onUndo,
@@ -58,28 +58,38 @@ class _RoomPageState extends State<RoomPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  FloatingActionButton(
+                  ElevatedButton(
+                    style: ButtonStyle(),
                     onPressed: () => controller.swipe(CardSwiperDirection.left),
-                    child: const Icon(
-                      Icons.check,
-                      color: Colors.green,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 16.0, bottom: 16),
+                      child: Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      ),
                     ),
                   ),
-                  FloatingActionButton(
+                  ElevatedButton(
                     onPressed: () =>
                         controller.swipe(CardSwiperDirection.right),
-                    child: const Icon(
-                      Icons.close,
-                      color: Colors.red,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 16.0, bottom: 16),
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ),
                     ),
                   ),
-                  FloatingActionButton(
+                  ElevatedButton(
                     onPressed: controller.undo,
-                    child: const Icon(Icons.rotate_left),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 16.0, bottom: 16),
+                      child: Icon(Icons.rotate_left),
+                    ),
                   ),
                 ],
               ),
@@ -98,9 +108,9 @@ class _RoomPageState extends State<RoomPage> {
     if (direction == CardSwiperDirection.top ||
         direction == CardSwiperDirection.bottom) {
       return false;
-    } else if(direction == CardSwiperDirection.left) {
+    } else if (direction == CardSwiperDirection.left) {
       answer.add(true);
-    } else  if(direction == CardSwiperDirection.right) {
+    } else if (direction == CardSwiperDirection.right) {
       answer.add(false);
     }
     return true;
@@ -118,15 +128,15 @@ class _RoomPageState extends State<RoomPage> {
   }
 
   _onEnd() {
-    for(int i = 0; i <= cards.length-1; i++){
-      titles.add(candidates[i].name);
-      print("проверка названия");
+    for (int i = 0; i < setTourList.length; i++) {
+      titles.add(setTourList[i].name);
     }
-    print(titles);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => FinishPage(answer: answer, titles: titles)),
+      MaterialPageRoute(
+          builder: (context) => FinishPage(answer: answer, titles: titles, code: '000000',)),
     );
     print(answer);
+    print(titles);
   }
 }

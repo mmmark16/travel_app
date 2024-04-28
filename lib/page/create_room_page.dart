@@ -1,15 +1,25 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:travel_app/page/room_page.dart';
+import 'package:travel_app/page/swipe_room_page.dart';
+import '../global.dart';
+
+
 
 class CreatePageRoom extends StatefulWidget {
-  const CreatePageRoom({super.key});
+  final String title;
+  const CreatePageRoom({super.key, required this.title});
+
 
   @override
   State<CreatePageRoom> createState() => _CreatePageRoomState();
 }
 
 class _CreatePageRoomState extends State<CreatePageRoom> {
+
+  int code = Random().nextInt(899999) + 100000;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +35,7 @@ class _CreatePageRoomState extends State<CreatePageRoom> {
             Padding(
               padding: const EdgeInsets.only(bottom: 64.0),
               child: Text(
-                "Тур по Японии",
+                setCountry.name,
                 style: TextStyle(fontSize: 36),
                 textAlign: TextAlign.center,
               ),
@@ -36,7 +46,7 @@ class _CreatePageRoomState extends State<CreatePageRoom> {
               textAlign: TextAlign.center,
             ),
             Text(
-              "202020",
+              code.toString(),
               style: TextStyle(fontSize: 24),
               textAlign: TextAlign.center,
             ),
@@ -68,10 +78,17 @@ class _CreatePageRoomState extends State<CreatePageRoom> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
-                onTap: () async {
+                onTap: () {
+                  for(int i = 0; i < setCountry.tours.length; i++){
+                    for(int j = 0; j < tourList.length; j++){
+                      if(setCountry.tours[i] == tourList[j].id){
+                        setTourList.add(tourList[j]);
+                      }
+                    }
+                  }
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RoomPage()),
+                    MaterialPageRoute(builder: (context) => SwipeRoomPage()),
                   );
                 },
                 child: Container(

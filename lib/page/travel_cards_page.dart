@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../global.dart';
 import '../widget/travel_card.dart';
 
 class TravelsCardsPage extends StatefulWidget {
@@ -14,9 +15,14 @@ class _TravelsCardsPageState extends State<TravelsCardsPage> {
     return ListView.builder(
       shrinkWrap: true,
       padding: const EdgeInsets.all(8),
-      itemCount: 10,
+      itemCount: countryList.length,
       itemBuilder: (BuildContext context, int index) {
-        return TravelCard();
+        return TravelCard(
+          id: countryList[index].id,
+          title: countryList[index].name,
+          photo: countryList[index].photo,
+          tours: countryList[index].tours,
+        );
       },
     );
   }

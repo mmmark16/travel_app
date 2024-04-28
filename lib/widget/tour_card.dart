@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../model/card_model.dart';
+import '../model/tour_model.dart';
 
 class TourCard extends StatelessWidget {
-  final CardModel candidate;
+  final TourModel setTour;
 
   const TourCard(
-    this.candidate, {
+    this.setTour, {
     super.key,
   });
 
@@ -30,14 +30,14 @@ class TourCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(candidate.photo_path),
+          Image.network(setTour.photo_path),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  candidate.name,
+                  setTour.name,
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -45,28 +45,28 @@ class TourCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  candidate.night,
+                  setTour.night,
                   style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 20,
                   ),
                 ),
                 Text(
-                  candidate.citys,
+                  setTour.cities,
                   style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 20,
                   ),
                 ),
                 Text(
-                  candidate.food,
+                  setTour.food,
                   style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 20,
                   ),
                 ),
                 Text(
-                  candidate.excursions,
+                  setTour.excursions,
                   style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 20,
@@ -75,7 +75,7 @@ class TourCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 32.0),
                   child: Text(
-                    candidate.cost,
+                    setTour.cost,
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 24,

@@ -35,6 +35,7 @@ class _SelectRoomPagePageState extends State<SelectRoomPage> {
               ),
             ),
           ),
+          Container()
         ],
       ),
     );
