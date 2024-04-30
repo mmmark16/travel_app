@@ -13,7 +13,19 @@ class SelectRoomPage extends StatefulWidget {
   @override
   State<SelectRoomPage> createState() => _SelectRoomPagePageState();
 }
+TextEditingController _pass1 = TextEditingController();
+TextEditingController _pass2 = TextEditingController();
+TextEditingController _pass3 = TextEditingController();
+TextEditingController _pass4 = TextEditingController();
+TextEditingController _pass5 = TextEditingController();
+TextEditingController _pass6 = TextEditingController();
 
+FocusNode _focus1 = FocusNode();
+FocusNode _focus2 = FocusNode();
+FocusNode _focus3 = FocusNode();
+FocusNode _focus4 = FocusNode();
+FocusNode _focus5 = FocusNode();
+FocusNode _focus6 = FocusNode();
 TextEditingController _controller = new TextEditingController();
 
 class _SelectRoomPagePageState extends State<SelectRoomPage> {
@@ -48,7 +60,7 @@ class _SelectRoomPagePageState extends State<SelectRoomPage> {
                   style: TextStyle(fontSize: 24),
                   textAlign: TextAlign.center,
                 ),
-                Padding(
+          /*      Padding(
                   padding: const EdgeInsets.only(top: 12.0, bottom: 12),
                   child: Container(
                     width: MediaQuery.of(context).size.width / 2,
@@ -68,7 +80,182 @@ class _SelectRoomPagePageState extends State<SelectRoomPage> {
                       ),
                     ),
                   ),
-                ),
+                ),*/
+
+                Container(
+                  margin: EdgeInsets.only(top:24,bottom: 24),
+                  // width: MediaQuery.of(context).size.width-30,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          // height: 66,
+                          width: (MediaQuery.of(context).size.width-30)/7,
+
+                          padding: EdgeInsets.only(left: 8,right: 8),
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(94, 132, 237,1),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+
+                          ),
+                          child: Center(child:TextField(
+                            onChanged: (_pass1){
+                              _pass1.length==1 ?
+                              FocusScope.of(context).requestFocus(_focus2):FocusScope.of(context).requestFocus(_focus1);},
+                            maxLength: 1,
+                            focusNode: _focus1,
+                            controller:  _pass1,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 30,color: Colors.white),
+
+                            decoration: InputDecoration(
+                              counterText: '',
+                              hintText: "",
+                              border: InputBorder.none,
+                            ),
+                            maxLines: 1,
+                          )),
+                        ),
+                        Container(
+                          //  height: 66,
+                          width: (MediaQuery.of(context).size.width-30)/7,
+
+                          padding: EdgeInsets.only(left: 8,right: 8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Color.fromRGBO(94, 132, 237,1),
+                          ),
+                          child: Center(child:TextField(
+                            onChanged: (_pass2){
+                              _pass2.length==1 ?
+                              FocusScope.of(context).requestFocus(_focus3):FocusScope.of(context).requestFocus(_focus1);},
+                            maxLength: 1,
+                            focusNode: _focus2,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 30,color: Colors.white),
+                            controller: _pass2,
+                            decoration: InputDecoration(
+                              counterText: '',
+                              hintText: "",
+                              border: InputBorder.none,
+                            ),
+                            maxLines: 1,
+                          )),
+                        ),
+                        Container(
+                          // height: 66,
+                          width: (MediaQuery.of(context).size.width-30)/7,
+
+                          padding: EdgeInsets.only(left: 8,right: 8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Color.fromRGBO(94, 132, 237,1),
+                          ),
+                          child: Center(child:TextField(
+                            onChanged: (_pass3){
+                              _pass3.length==1 ?
+                              FocusScope.of(context).requestFocus(_focus4):FocusScope.of(context).requestFocus(_focus2);},
+                            maxLength: 1,
+                            focusNode: _focus3,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 30,color: Colors.white),
+                            controller: _pass3,
+                            decoration: InputDecoration(
+                              hintText: "",
+                              counterText: '',
+                              border: InputBorder.none,
+                            ),
+                            maxLines: 1,
+                          )),
+                        ),
+                        Container(
+                          //  height: 66,
+                          width: (MediaQuery.of(context).size.width-30)/7,
+
+                          padding: EdgeInsets.only(left: 8,right: 8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Color.fromRGBO(94, 132, 237,1),
+                          ),
+                          child: Center(child:TextField(
+                            onChanged: (_pass4){
+                              _pass4.length==1 ?
+                              FocusScope.of(context).requestFocus(_focus5):FocusScope.of(context).requestFocus(_focus3);},
+                            maxLength: 1,
+                            focusNode: _focus4,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 30,color: Colors.white),
+                            controller: _pass4,
+                            decoration: InputDecoration(
+                              counterText: '',
+                              hintText: "",
+                              border: InputBorder.none,
+                            ),
+                            maxLines: 1,
+                          )),
+                        ),
+                        Container(
+                          //  height: 66,
+                          width: (MediaQuery.of(context).size.width-30)/7,
+
+                          padding: EdgeInsets.only(left: 8,right: 8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Color.fromRGBO(94, 132, 237,1),
+                          ),
+                          child: Center(child:TextField(
+                            onChanged: (_pass5){
+                              _pass5.length==1 ?
+                              FocusScope.of(context).requestFocus(_focus6):FocusScope.of(context).requestFocus(_focus4);},
+                            maxLength: 1,
+                            focusNode: _focus5,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 30,color: Colors.white),
+                            controller: _pass5,
+                            decoration: InputDecoration(
+                              counterText: '',
+                              hintText: "",
+                              border: InputBorder.none,
+                            ),
+                            maxLines: 1,
+                          )),
+                        ),
+                        Container(
+                          //  height: 66,
+                          width: (MediaQuery.of(context).size.width-30)/7,
+
+                          padding: EdgeInsets.only(left: 8,right: 8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Color.fromRGBO(94, 132, 237,1),
+                          ),
+                          child: Center(child:TextField(
+                            onChanged: (_pass6){
+                              _pass6.length==1 ?
+                              FocusScope.of(context).requestFocus(_focus6):FocusScope.of(context).requestFocus(_focus5);},
+                            maxLength: 1,
+                            focusNode: _focus6,
+                            keyboardType: TextInputType.number,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 30,color: Colors.white),
+                            controller: _pass6,
+                            decoration: InputDecoration(
+                              counterText: '',
+                              hintText: "",
+                              border: InputBorder.none,
+                            ),
+                            maxLines: 1,
+                          )),
+                        )
+                      ],
+                    )),
+
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -115,8 +302,10 @@ class _SelectRoomPagePageState extends State<SelectRoomPage> {
                     roomList.add(_timeRoom);
                   }
                 });
+                String _codeRoom = '';
+                _codeRoom = _pass1.text + _pass2.text + _pass3.text + _pass4.text + _pass5.text + _pass6.text ;
                 for (int i = 0; i < roomList.length; i++) {
-                  if (_controller.text != roomList[i].id) {
+                  if (_codeRoom != roomList[i].id) {
                     if (i == roomList.length - 1) {
                       Fluttertoast.showToast(
                           msg: "Неверный код!",
@@ -128,11 +317,17 @@ class _SelectRoomPagePageState extends State<SelectRoomPage> {
                           fontSize: 16.0);
                     }
                   } else {
+                    _pass1.clear();
+                    _pass2.clear();
+                    _pass3.clear();
+                    _pass4.clear();
+                    _pass5.clear();
+                    _pass6.clear();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              FinishPage(code: _controller.text)),
+                              FinishPage(code:_codeRoom)),
                     );
                     break;
                   }
