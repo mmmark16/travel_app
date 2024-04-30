@@ -128,6 +128,7 @@ class _FinishPageState extends State<FinishPage> {
               style: TextStyle(
                 fontSize: 52,
                 color: Color.fromRGBO(244, 246, 251, 1),
+                fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
@@ -234,7 +235,7 @@ class _FinishPageState extends State<FinishPage> {
                       ),
                       child: Text(
                         "Добавить ответ",
-                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),),
+                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),fontWeight: FontWeight.bold,),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -258,7 +259,7 @@ class _FinishPageState extends State<FinishPage> {
                       ),
                       child: Text(
                         "Выйти",
-                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),),
+                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),fontWeight: FontWeight.bold,),
                         textAlign: TextAlign.center,
                       ),
                     ),
