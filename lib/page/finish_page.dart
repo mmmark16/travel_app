@@ -19,7 +19,8 @@ class FinishPage extends StatefulWidget {
 
 class _FinishPageState extends State<FinishPage> {
   RoomModel setRoom = new RoomModel(id: '', id_country: '', answers: []);
-  CountryModel _setCountry = new CountryModel(id: '', name: '', photo: '', tours: []);
+  CountryModel _setCountry =
+      new CountryModel(id: '', name: '', photo: '', tours: []);
   List<String> allAnswers = [];
   List<dynamic> splitArray = [];
   List<String> resultAnswer = ['', '', '', ''];
@@ -62,19 +63,17 @@ class _FinishPageState extends State<FinishPage> {
         }
       }
     }
-    setState(() {
-    });
-    for (int i = 0; i < countryList.length; i++){
-      if (setRoom.id_country == countryList[i].id){
+    setState(() {});
+    for (int i = 0; i < countryList.length; i++) {
+      if (setRoom.id_country == countryList[i].id) {
         countryName = countryList[i].name;
         _setCountry = countryList[i];
       }
     }
 
-
-    for (int i = 0; i < _setCountry.tours.length; i++){
-      for (int j = 0; j < tourList.length; j++){
-        if(_setCountry.tours[i] == tourList[j].id){
+    for (int i = 0; i < _setCountry.tours.length; i++) {
+      for (int j = 0; j < tourList.length; j++) {
+        if (_setCountry.tours[i] == tourList[j].id) {
           resultTitle[i] = tourList[j].name;
         }
       }
@@ -89,6 +88,7 @@ class _FinishPageState extends State<FinishPage> {
   }
 
   Timer timer = Timer(Duration(seconds: 1), () {});
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -111,108 +111,163 @@ class _FinishPageState extends State<FinishPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Итоги"),
+      backgroundColor: Color.fromRGBO(
+        94,
+        132,
+        237,
+        1,
       ),
-      body: Column(
-        children: [
-          Text(countryName, style: TextStyle(fontSize: 52, ),textAlign: TextAlign.center,),
-          Text("Результаты ответов:", style: TextStyle(fontSize: 24),),
-          Container(
-            child: Row(
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: resultTitle.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(8),
-                                child: Text(resultTitle[index]),
-                                width: MediaQuery.of(context).size.width / 2,
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(8),
-                                child: Center(
-                                  child: resultAnswer[index] == '1' ? Icon(Icons.check_circle, color: Color.fromRGBO(94, 132, 237, 1,), size: 32,) : Icon(Icons.cancel,color: Color.fromRGBO(94, 132, 237, 1,), size: 32,)
+      body: Padding(
+        padding: const EdgeInsets.only(left: 24.0, right: 24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              countryName,
+              style: TextStyle(
+                fontSize: 52,
+                color: Color.fromRGBO(244, 246, 251, 1),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 24.0, top: 12),
+              child: Container(
+                  padding: EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(244, 246, 251, 1),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: const Offset(
+                          5.0,
+                          5.0,
+                        ),
+                        blurRadius: 10.0,
+                        spreadRadius: 2.0,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Результаты ответов:",
+                        style: TextStyle(fontSize: 24),
+                      ),
+                      Container(
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: resultTitle.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width/1.7,
+                                  padding: EdgeInsets.only(top: 8, bottom: 8),
+                                  child: Text(resultTitle[index], style: TextStyle(fontSize: 18),),
                                 ),
-                                width: MediaQuery.of(context).size.width / 2,
-                              )
-                            ],
-                          );
-                        },
+                                Container(
+                                  padding: EdgeInsets.all(8),
+                                  child: Center(
+                                      child: resultAnswer[index] == '1'
+                                          ? Icon(
+                                              Icons.check_circle,
+                                              color: Color.fromRGBO(
+                                                94,
+                                                132,
+                                                237,
+                                                1,
+                                              ),
+                                              size: 32,
+                                            )
+                                          : Icon(
+                                              Icons.cancel,
+                                              color: Color.fromRGBO(
+                                                94,
+                                                132,
+                                                237,
+                                                1,
+                                              ),
+                                              size: 32,
+                                            )),
+                                )
+                              ],
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const Divider(),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          for(int i = 0; i < _setCountry.tours.length; i++){
-                            for(int j = 0; j < tourList.length; j++){
-                              if(_setCountry.tours[i] == tourList[j].id){
-                                setTourList.add(tourList[j]);
-                              }
-                            }
+                    ],
+                  )),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      for (int i = 0; i < _setCountry.tours.length; i++) {
+                        for (int j = 0; j < tourList.length; j++) {
+                          if (_setCountry.tours[i] == tourList[j].id) {
+                            setTourList.add(tourList[j]);
                           }
-                          int _code = int.parse(widget.code);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => SwipeRoomPage(roomCode: _code)),
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.deepPurple.shade200,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            "Добавить ответ",
-                            style: TextStyle(fontSize: 24),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
+                        }
+                      }
+                      int _code = int.parse(widget.code);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                SwipeRoomPage(roomCode: _code)),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(58, 207, 233, 1),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Text(
+                        "Добавить ответ",
+                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyHomePage()
-                              ),
-                              (route) => false,
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.deepPurple.shade200,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            "Выйти",
-                            style: TextStyle(fontSize: 24),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
+                  ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => MyHomePage()),
+                        (route) => false,
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(58, 207, 233, 1),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Text(
+                        "Выйти",
+                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
