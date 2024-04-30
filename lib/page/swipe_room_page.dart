@@ -33,10 +33,8 @@ class _SwipeRoomPageState extends State<SwipeRoomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Ваша комната"),
-      ),
+      backgroundColor: Color.fromRGBO(94, 132, 237,1),
+
       body: SafeArea(
         child: Column(
           children: [
@@ -65,7 +63,7 @@ class _SwipeRoomPageState extends State<SwipeRoomPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    style: ButtonStyle(),
+
                     onPressed: () => controller.swipe(CardSwiperDirection.left),
                     child: Padding(
                       padding: const EdgeInsets.only(top: 16.0, bottom: 16),

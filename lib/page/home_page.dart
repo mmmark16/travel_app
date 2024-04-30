@@ -42,11 +42,13 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon( Icons.travel_explore,color: Color.fromRGBO(94, 132, 237,1),),
+            icon: Icon( Icons.travel_explore,color: Colors.grey,),
+            activeIcon: Icon( Icons.travel_explore,color: Color.fromRGBO(94, 132, 237,1),size: 32,),
             label: 'Travel',
           ),
           BottomNavigationBarItem(
-            icon: Icon( Icons.meeting_room, color: Color.fromRGBO(94, 132, 237,1),),
+            icon: Icon( Icons.meeting_room, color: Colors.grey,),
+            activeIcon: Icon( Icons.meeting_room,color: Color.fromRGBO(94, 132, 237,1),size: 32,),
             label: 'Rooms',
           ),
         ],

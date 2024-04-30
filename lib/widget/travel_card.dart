@@ -94,7 +94,7 @@ class TravelCard extends StatelessWidget {
 
                   title,
                   textAlign: TextAlign.right,
-                  style: TextStyle(fontSize: 24, color: Color.fromRGBO(94, 132, 237,1)),
+                  style: TextStyle(fontSize: 24, color: Color.fromRGBO(94, 132, 237,1),fontWeight: FontWeight.bold),
                 )),
               ))
             ],
