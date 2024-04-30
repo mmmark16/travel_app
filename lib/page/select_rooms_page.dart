@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:travel_app/page/finish_page.dart';
 
@@ -12,7 +13,9 @@ class SelectRoomPage extends StatefulWidget {
   @override
   State<SelectRoomPage> createState() => _SelectRoomPagePageState();
 }
+
 TextEditingController _controller = new TextEditingController();
+
 class _SelectRoomPagePageState extends State<SelectRoomPage> {
   @override
   Widget build(BuildContext context) {
@@ -21,29 +24,74 @@ class _SelectRoomPagePageState extends State<SelectRoomPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            "Введите код комнаты, в которую хотите присоедениться.\nЕго вы можете узнать у создателя комнаты.",
-            style: TextStyle(fontSize: 24),
-            textAlign: TextAlign.center,
-          ),
           Container(
-            width: MediaQuery.of(context).size.width / 2,
-            child: TextField(
-              controller: _controller,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: "000000",
-                hintStyle: TextStyle(fontSize: 24,),
-                filled: true,
-                fillColor: Colors.blueAccent,
-                border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(2)),
-              ),
+            padding: EdgeInsets.only(left: 12, right: 12, top: 24, bottom: 24),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(244, 246, 251, 1),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  offset: const Offset(
+                    5.0,
+                    5.0,
+                  ),
+                  blurRadius: 10.0,
+                  spreadRadius: 2.0,
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Text(
+                  "Введите код комнаты, в которую хотите присоедениться.",
+                  style: TextStyle(fontSize: 24),
+                  textAlign: TextAlign.center,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12.0, bottom: 12),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: TextField(
+                      controller: _controller,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: "000000",
+                        hintStyle: TextStyle(
+                          fontSize: 24,
+                        ),
+                        filled: true,
+                        fillColor: Colors.blueAccent,
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(2)),
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/image/Iconsmile.svg',
+                      width: 24,
+                      height: 24,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 1.3,
+                      child: Text(
+                        "Его вы можете узнать у создателя комнаты.",
+                        style: TextStyle(fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 24),
             child: GestureDetector(
               onTap: () async {
                 QuerySnapshot qSnapRoom =
@@ -67,35 +115,42 @@ class _SelectRoomPagePageState extends State<SelectRoomPage> {
                     roomList.add(_timeRoom);
                   }
                 });
-                for(int i = 0; i < roomList.length; i++){
-                  if(_controller.text != roomList[i].id){
-                    if(i == roomList.length-1){
+                for (int i = 0; i < roomList.length; i++) {
+                  if (_controller.text != roomList[i].id) {
+                    if (i == roomList.length - 1) {
                       Fluttertoast.showToast(
-                          msg: "Неверный код!",    toastLength:
-                      Toast.LENGTH_SHORT,    gravity:
-                      ToastGravity.CENTER,    timeInSecForIosWeb: 1,    backgroundColor:
-                      Colors.red,    textColor: Colors.white,    fontSize: 16.0);
+                          msg: "Неверный код!",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
                     }
-
                   } else {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => FinishPage(code: _controller.text)),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              FinishPage(code: _controller.text)),
                     );
                     break;
                   }
                 }
-
               },
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.deepPurple.shade200,
-                  borderRadius: BorderRadius.circular(8),
+                  color: Color.fromRGBO(58, 207, 233, 1),
+                  borderRadius: BorderRadius.circular(16),
                 ),
                 child: Text(
                   "Войти в комнату",
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Color.fromRGBO(244, 246, 251, 1),
+                    fontWeight: FontWeight.bold,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),

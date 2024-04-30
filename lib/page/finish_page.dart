@@ -128,6 +128,7 @@ class _FinishPageState extends State<FinishPage> {
               style: TextStyle(
                 fontSize: 52,
                 color: Color.fromRGBO(244, 246, 251, 1),
+                fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
@@ -154,7 +155,7 @@ class _FinishPageState extends State<FinishPage> {
                     children: [
                       Text(
                         "Результаты ответов:",
-                        style: TextStyle(fontSize: 24),
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,),
                       ),
                       Container(
                         child: ListView.separated(
@@ -185,12 +186,7 @@ class _FinishPageState extends State<FinishPage> {
                                             )
                                           : Icon(
                                               Icons.cancel,
-                                              color: Color.fromRGBO(
-                                                94,
-                                                132,
-                                                237,
-                                                1,
-                                              ),
+                                              color: Colors.red,
                                               size: 32,
                                             )),
                                 )
@@ -234,7 +230,7 @@ class _FinishPageState extends State<FinishPage> {
                       ),
                       child: Text(
                         "Добавить ответ",
-                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),),
+                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),fontWeight: FontWeight.bold,),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -258,7 +254,7 @@ class _FinishPageState extends State<FinishPage> {
                       ),
                       child: Text(
                         "Выйти",
-                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),),
+                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),fontWeight: FontWeight.bold,),
                         textAlign: TextAlign.center,
                       ),
                     ),
