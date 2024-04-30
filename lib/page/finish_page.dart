@@ -127,6 +127,7 @@ class _FinishPageState extends State<FinishPage> {
               countryName,
               style: TextStyle(
                 fontSize: 52,
+                color: Color.fromRGBO(244, 246, 251, 1),
               ),
               textAlign: TextAlign.center,
             ),
@@ -156,7 +157,6 @@ class _FinishPageState extends State<FinishPage> {
                         style: TextStyle(fontSize: 24),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width,
                         child: ListView.separated(
                           shrinkWrap: true,
                           itemCount: resultTitle.length,
@@ -230,11 +230,11 @@ class _FinishPageState extends State<FinishPage> {
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(58, 207, 233, 1),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                       child: Text(
                         "Добавить ответ",
-                        style: TextStyle(fontSize: 24),
+                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -254,11 +254,11 @@ class _FinishPageState extends State<FinishPage> {
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(58, 207, 233, 1),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(16),
                       ),
                       child: Text(
                         "Выйти",
-                        style: TextStyle(fontSize: 24),
+                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),),
                         textAlign: TextAlign.center,
                       ),
                     ),

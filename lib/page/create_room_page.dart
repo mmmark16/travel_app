@@ -24,9 +24,11 @@ class _CreatePageRoomState extends State<CreatePageRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Создание комнаты"),
+      backgroundColor: Color.fromRGBO(
+        94,
+        132,
+        237,
+        1,
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 12.0, right: 12),
@@ -37,77 +39,109 @@ class _CreatePageRoomState extends State<CreatePageRoom> {
               padding: const EdgeInsets.only(bottom: 64.0),
               child: Text(
                 setCountry.name,
-                style: TextStyle(fontSize: 36),
+                style: TextStyle(
+                  fontSize: 36,
+                  color: Color.fromRGBO(244, 246, 251, 1),
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
-            Text(
-              "Код вашей комнаты:",
-              style: TextStyle(fontSize: 24),
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              code.toString(),
-              style: TextStyle(fontSize: 24),
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              "Сообщите его вашим друзьям, чтобы они смогли вступить в вашу комнату.",
-              style: TextStyle(fontSize: 24),
-              textAlign: TextAlign.center,
-            ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () async {
-                  await Clipboard.setData(ClipboardData(text: code.toString()));
-                },
-
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurple.shade200,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    "Скопировать",
-                    style: TextStyle(fontSize: 24),
-                    textAlign: TextAlign.center,
-                  ),
+              padding: const EdgeInsets.only(top: 12.0, bottom: 36),
+              child: Container(
+                padding: EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(244, 246, 251, 1),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: const Offset(
+                        5.0,
+                        5.0,
+                      ),
+                      blurRadius: 10.0,
+                      spreadRadius: 2.0,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      "Код вашей комнаты:",
+                      style: TextStyle(fontSize: 24),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      code.toString(),
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      "Сообщите его вашим друзьям, чтобы они смогли вступить в вашу комнату.",
+                      style: TextStyle(fontSize: 24),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () async {
-                  for(int i = 0; i < setCountry.tours.length; i++){
-                    for(int j = 0; j < tourList.length; j++){
-                      if(setCountry.tours[i] == tourList[j].id){
-                        setTourList.add(tourList[j]);
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    await Clipboard.setData(ClipboardData(text: code.toString()));
+                  },
+                  child: Container(
+                    height: 86,
+                    width: MediaQuery.of(context).size.width/2.2,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(58, 207, 233, 1),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Скопировать",
+                        style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    for(int i = 0; i < setCountry.tours.length; i++){
+                      for(int j = 0; j < tourList.length; j++){
+                        if(setCountry.tours[i] == tourList[j].id){
+                          setTourList.add(tourList[j]);
+                        }
                       }
                     }
-                  }
-                  List<String> zero = [];
-                  await FirebaseFirestore.instance.collection("room").doc(code.toString()).set({'id_country':'${setCountry.id}', 'answers':zero});
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SwipeRoomPage(roomCode: code,)),
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurple.shade200,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    "Создать комнату",
-                    style: TextStyle(fontSize: 24),
-                    textAlign: TextAlign.center,
+                    List<String> zero = [];
+                    await FirebaseFirestore.instance.collection("room").doc(code.toString()).set({'id_country':'${setCountry.id}', 'answers':zero});
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SwipeRoomPage(roomCode: code,)),
+                    );
+                  },
+                  child: Container(
+                    height: 86,
+                    width: MediaQuery.of(context).size.width/2.2,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(58, 207, 233, 1),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      "Создать комнату",
+                      style: TextStyle(fontSize: 24, color: Color.fromRGBO(244, 246, 251, 1),),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
-              ),
+              ],
             )
           ],
         ),
