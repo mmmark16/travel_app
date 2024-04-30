@@ -38,27 +38,65 @@ class TravelCard extends StatelessWidget {
           );
         },
         child: Container(
-          padding: EdgeInsets.all(16.0),
+          width: MediaQuery.of(context).size.width-24,
+
           decoration: BoxDecoration(
-            color: Colors.deepPurple.shade200,
-            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                offset: const Offset(
+                  5.0,
+                  5.0,
+                ),
+                blurRadius: 10.0,
+                spreadRadius: 2.0,
+              ),
+            ],
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(20),
           ),
-          child: Column(
+          child: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Container(
-                  height: 160,
-                  child: Image.network(photo),
+
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image.network(
+                  photo,
+                  height: 150.0,
+
+
                 ),
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
+             Container(
+               height: 150,
+                 decoration: BoxDecoration(
+
+                   gradient: LinearGradient(
+                       colors: [
+                          Colors.transparent,
+                         Color.fromRGBO(244, 246, 251,0.4),
+                         Color.fromRGBO(244, 246, 251,0.9),
+                         Color.fromRGBO(244, 246, 251,1),
+                       ],
+                       begin:  FractionalOffset(0.0, 0.0),
+                       end:  FractionalOffset(1.0, 0.0),
+                       stops: [0.0,0.3,0.6,0.8],
+                       tileMode: TileMode.clamp),
+                   borderRadius: BorderRadius.circular(20),
+                 ),
+                 width: MediaQuery.of(context).size.width,
+                 child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  margin: EdgeInsets.only(right: 24),
+                    width: 150,
+                    child:Text(
+
                   title,
-                  style: TextStyle(fontSize: 24),
-                ),
-              )
+                  textAlign: TextAlign.right,
+                  style: TextStyle(fontSize: 24, color: Color.fromRGBO(94, 132, 237,1)),
+                )),
+              ))
             ],
           ),
         ),

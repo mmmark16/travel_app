@@ -27,23 +27,26 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Travel_app"),
+      backgroundColor: Color.fromRGBO(94, 132, 237,1),
+     appBar: AppBar(
+        backgroundColor: Color.fromRGBO(94, 132, 237,1),
+        title: Text("Travel_app",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 32),),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromRGBO(244, 246, 251,1),
+       selectedItemColor: Color.fromRGBO(94, 132, 237,1),
         currentIndex: _selectedIndex, //New
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon( Icons.travel_explore,),
+            icon: Icon( Icons.travel_explore,color: Color.fromRGBO(94, 132, 237,1),),
             label: 'Travel',
           ),
           BottomNavigationBarItem(
-            icon: Icon( Icons.meeting_room, ),
+            icon: Icon( Icons.meeting_room, color: Color.fromRGBO(94, 132, 237,1),),
             label: 'Rooms',
           ),
         ],

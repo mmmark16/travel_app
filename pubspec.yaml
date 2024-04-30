@@ -64,9 +64,12 @@ flutter:
   # the material Icons class.
 
   assets:
-    - assets/
+    - assets/image/
 
-
+  fonts:
+    - family: Gilroy
+      fonts:
+        - asset: assets/fonts/Gilroy-Light.ttf
 
   uses-material-design: true
 
