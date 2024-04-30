@@ -1,13 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:travel_app/model/room_model.dart';
 import 'package:travel_app/page/finish_page.dart';
 import '../global.dart';
 import '../widget/tour_card.dart';
 
 class SwipeRoomPage extends StatefulWidget {
-  const SwipeRoomPage({
-    super.key,
-  });
+  final int roomCode;
+
+  const SwipeRoomPage({super.key, required this.roomCode});
 
   @override
   State<SwipeRoomPage> createState() => _SwipeRoomPageState();
@@ -17,7 +19,8 @@ class _SwipeRoomPageState extends State<SwipeRoomPage> {
   final CardSwiperController controller = CardSwiperController();
   final cards = setTourList.map(TourCard.new).toList();
 
-  List<bool> answer = [];
+  List<dynamic> answer = [];
+  List<dynamic> allAnswer = [];
   List<String> titles = [];
 
   @override
@@ -43,7 +46,6 @@ class _SwipeRoomPageState extends State<SwipeRoomPage> {
                 cardsCount: setTourList.length,
                 isLoop: false,
                 onSwipe: _onSwipe,
-                onUndo: _onUndo,
                 numberOfCardsDisplayed: 3,
                 backCardOffset: const Offset(40, 40),
                 padding: const EdgeInsets.all(24.0),
@@ -84,13 +86,6 @@ class _SwipeRoomPageState extends State<SwipeRoomPage> {
                       ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: controller.undo,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 16.0, bottom: 16),
-                      child: Icon(Icons.rotate_left),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -109,34 +104,36 @@ class _SwipeRoomPageState extends State<SwipeRoomPage> {
         direction == CardSwiperDirection.bottom) {
       return false;
     } else if (direction == CardSwiperDirection.left) {
-      answer.add(true);
+      answer.add('1');
     } else if (direction == CardSwiperDirection.right) {
-      answer.add(false);
+      answer.add('0');
     }
     return true;
   }
 
-  bool _onUndo(
-    int? previousIndex,
-    int currentIndex,
-    CardSwiperDirection direction,
-  ) {
-    debugPrint(
-      'The card $currentIndex was undod from the ${direction.name}',
-    );
-    return true;
-  }
 
-  _onEnd() {
+  _onEnd() async {
     for (int i = 0; i < setTourList.length; i++) {
       titles.add(setTourList[i].name);
     }
+    for (int i = 0; i < roomList.length; i++) {
+      if (widget.roomCode.toString() == roomList[i].id) {
+        allAnswer = roomList[i].answers;
+      }
+    }
+    allAnswer.add(answer.join());
+    print("проверка");
+    print(allAnswer);
+    await FirebaseFirestore.instance.collection("room").doc(widget.roomCode.toString()).set({'id_country':'${setCountry.id}', 'answers':allAnswer});
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => FinishPage(answer: answer, titles: titles, code: '000000',)),
+          builder: (context) => FinishPage(
+                code: widget.roomCode.toString(),
+              )),
     );
     print(answer);
     print(titles);
+    clearSetTourList();
   }
 }

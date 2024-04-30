@@ -38,6 +38,7 @@ dependencies:
   flutter_card_swiper: ^7.0.0
   firebase_core:
   cloud_firestore:
+  fluttertoast:
 
 
 

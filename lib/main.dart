@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_app/page/home_page.dart';
 import 'global.dart';
 import 'model/country_model.dart';
+import 'model/room_model.dart';
 import 'model/tour_model.dart';
 
 void main() async {
@@ -56,6 +57,28 @@ void main() async {
       );
       tourList.add(_timeTour);
     }
+  });
+  QuerySnapshot qSnapRoom =
+  await FirebaseFirestore.instance.collection('room').get();
+  int roomLength = qSnapRoom.docs.length;
+  await FirebaseFirestore.instance
+      .collection("room")
+      .get()
+      .then((snapshot) {
+    for (int i = 0; i < roomLength; i++) {
+      RoomModel _timeRoom = new RoomModel(
+        id: '',
+        id_country: '',
+        answers: [],
+      );
+      _timeRoom = RoomModel(
+        id: snapshot.docs[i].id,
+        id_country: snapshot.docs[i].get('id_country'),
+        answers: snapshot.docs[i].get('answers'),
+      );
+      roomList.add(_timeRoom);
+    }
+
   });
   runApp(const MyApp());
 }

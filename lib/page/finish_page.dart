@@ -1,17 +1,17 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:travel_app/global.dart';
+import 'package:travel_app/model/country_model.dart';
 import 'package:travel_app/model/room_model.dart';
+import 'package:travel_app/page/home_page.dart';
+import 'package:travel_app/page/swipe_room_page.dart';
 
 class FinishPage extends StatefulWidget {
   final String code;
-  final List<bool> answer;
-  final List<String> titles;
 
-  const FinishPage(
-      {super.key,
-      required this.answer,
-      required this.titles,
-      required this.code});
+  const FinishPage({super.key, required this.code});
 
   @override
   State<FinishPage> createState() => _FinishPageState();
@@ -19,11 +19,14 @@ class FinishPage extends StatefulWidget {
 
 class _FinishPageState extends State<FinishPage> {
   RoomModel setRoom = new RoomModel(id: '', id_country: '', answers: []);
+  CountryModel _setCountry = new CountryModel(id: '', name: '', photo: '', tours: []);
   List<String> allAnswers = [];
   List<dynamic> splitArray = [];
-  List<String> resultAnswer = [];
+  List<String> resultAnswer = ['', '', '', ''];
+  List<String> resultTitle = ['', '', '', ''];
+  String countryName = '';
 
-  void returnAllAnswers() async {
+  returnAllAnswers() async {
     QuerySnapshot qSnap =
         await FirebaseFirestore.instance.collection('room').get();
     int roomLength = qSnap.docs.length;
@@ -46,12 +49,12 @@ class _FinishPageState extends State<FinishPage> {
       splitArray.add(allAnswers[i].split(''));
     }
     print(splitArray);
-    for(int i = 0; i < splitArray.length; i++){
-      if(i == 0){
+    for (int i = 0; i < splitArray.length; i++) {
+      if (i == 0) {
         resultAnswer = splitArray[i];
       } else {
-        for(int j = 0; j < resultAnswer.length; j++){
-          if(resultAnswer[j] == splitArray[i][j] && splitArray[i][j] == '1'){
+        for (int j = 0; j < resultAnswer.length; j++) {
+          if (resultAnswer[j] == splitArray[i][j] && splitArray[i][j] == '1') {
             resultAnswer[j] = '1';
           } else {
             resultAnswer[j] = '0';
@@ -59,14 +62,50 @@ class _FinishPageState extends State<FinishPage> {
         }
       }
     }
-    print('ИТОГ');
+    setState(() {
+    });
+    for (int i = 0; i < countryList.length; i++){
+      if (setRoom.id_country == countryList[i].id){
+        countryName = countryList[i].name;
+        _setCountry = countryList[i];
+      }
+    }
+
+
+    for (int i = 0; i < _setCountry.tours.length; i++){
+      for (int j = 0; j < tourList.length; j++){
+        if(_setCountry.tours[i] == tourList[j].id){
+          resultTitle[i] = tourList[j].name;
+        }
+      }
+    }
+    print("ИТОГ");
     print(resultAnswer);
+    print(resultTitle);
+    print(_setCountry.tours);
+
+    allAnswers = [];
+    splitArray = [];
+  }
+
+  Timer timer = Timer(Duration(seconds: 1), () {});
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      returnAllAnswers().then(() {
+        setState(() {});
+      });
+    });
+    timer = Timer.periodic(Duration(seconds: 5), (Timer t) async {
+      returnAllAnswers();
+    });
+    super.initState();
   }
 
   @override
-  void initState() {
-    returnAllAnswers();
-    super.initState();
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -78,7 +117,8 @@ class _FinishPageState extends State<FinishPage> {
       ),
       body: Column(
         children: [
-          Text("Ваши ответы:"),
+          Text(countryName, style: TextStyle(fontSize: 52, ),textAlign: TextAlign.center,),
+          Text("Результаты ответов:", style: TextStyle(fontSize: 24),),
           Container(
             child: Row(
               children: [
@@ -88,64 +128,85 @@ class _FinishPageState extends State<FinishPage> {
                       width: MediaQuery.of(context).size.width,
                       child: ListView.builder(
                         shrinkWrap: true,
-                        itemCount: widget.titles.length,
-                        itemBuilder:
-                            (BuildContext context, int index) {
-                          return Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(8),
-                                child: Text(widget.titles[index]),
-                                width: MediaQuery.of(context)
-                                    .size
-                                    .width /
-                                    2,
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(8),
-                                child: Center(
-                                  child: Text(
-                                      resultAnswer[index] == '1'
-                                          ? "Понравилось"
-                                          : "Не понравилось"),
-                                ),
-                                width: MediaQuery.of(context)
-                                    .size
-                                    .width /
-                                    2,
-                              )
-                            ],
-                          );
-                        },
-                      ),
-/*                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: widget.titles.length,
+                        itemCount: resultTitle.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
                                 padding: EdgeInsets.all(8),
-                                child: Text(widget.titles[index]),
+                                child: Text(resultTitle[index]),
                                 width: MediaQuery.of(context).size.width / 2,
                               ),
                               Container(
                                 padding: EdgeInsets.all(8),
                                 child: Center(
-                                  child: Text(widget.answer[index] == true
-                                      ? "Понравилось"
-                                      : "Не понравилось"),
+                                  child: resultAnswer[index] == '1' ? Icon(Icons.check_circle, color: Color.fromRGBO(94, 132, 237, 1,), size: 32,) : Icon(Icons.cancel,color: Color.fromRGBO(94, 132, 237, 1,), size: 32,)
                                 ),
                                 width: MediaQuery.of(context).size.width / 2,
                               )
                             ],
                           );
                         },
-                      ),*/
+                      ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          for(int i = 0; i < _setCountry.tours.length; i++){
+                            for(int j = 0; j < tourList.length; j++){
+                              if(_setCountry.tours[i] == tourList[j].id){
+                                setTourList.add(tourList[j]);
+                              }
+                            }
+                          }
+                          int _code = int.parse(widget.code);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SwipeRoomPage(roomCode: _code)),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.deepPurple.shade200,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            "Добавить ответ",
+                            style: TextStyle(fontSize: 24),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyHomePage()
+                              ),
+                              (route) => false,
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.deepPurple.shade200,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            "Выйти",
+                            style: TextStyle(fontSize: 24),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ],
@@ -156,6 +217,3 @@ class _FinishPageState extends State<FinishPage> {
     );
   }
 }
-
-
-
