@@ -155,7 +155,7 @@ class _FinishPageState extends State<FinishPage> {
                     children: [
                       Text(
                         "Результаты ответов:",
-                        style: TextStyle(fontSize: 24),
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,),
                       ),
                       Container(
                         child: ListView.separated(
@@ -186,12 +186,7 @@ class _FinishPageState extends State<FinishPage> {
                                             )
                                           : Icon(
                                               Icons.cancel,
-                                              color: Color.fromRGBO(
-                                                94,
-                                                132,
-                                                237,
-                                                1,
-                                              ),
+                                              color: Colors.red,
                                               size: 32,
                                             )),
                                 )
